@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "846661260362",
+    "project_id": "privacy-audit-11723",
+    "storage_bucket": "privacy-audit-11723.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846661260362:android:77637db6a7febd12f242b3",
+        "android_client_info": {
+          "package_name": "com.example.ppb_privacy_audit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4u8tZASncYpnQdjQ7MauoZmoVc8g57X0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
