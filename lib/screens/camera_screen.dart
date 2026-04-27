@@ -85,6 +85,89 @@ class _CameraScreenState extends State<CameraScreen> {
     }
   }
 
+  Future<void> _pickScreenshot() async {
+    if (!mounted) return;
+    await showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.grey.shade900,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (sheetCtx) => Padding(
+        padding: const EdgeInsets.fromLTRB(24, 20, 24, 32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'How to screenshot app permissions',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            _screenshotStep('1', 'Open phone  Settings → Apps'),
+            _screenshotStep('2', 'Tap the app you want to audit'),
+            _screenshotStep('3', 'Tap Permissions'),
+            _screenshotStep('4',
+                'Take a screenshot (Power + Volume Down)'),
+            _screenshotStep('5', 'Come back here and tap the button below'),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.pop(sheetCtx);
+                  _pickFromGallery();
+                },
+                icon: const Icon(Icons.photo_library_outlined),
+                label: const Text('Pick Screenshot from Gallery'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF185FA5),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _screenshotStep(String number, String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        children: [
+          Container(
+            width: 22,
+            height: 22,
+            decoration: const BoxDecoration(
+              color: Color(0xFF185FA5),
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Text(number,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold)),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(text,
+                style: const TextStyle(color: Colors.white70, fontSize: 13)),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _confirm() {
     if (_previewFile != null) {
       Navigator.pop(context, _previewFile);
@@ -104,6 +187,13 @@ class _CameraScreenState extends State<CameraScreen> {
         foregroundColor: Colors.white,
         title: const Text('Add evidence photo'),
         actions: [
+          TextButton.icon(
+            onPressed: _pickScreenshot,
+            icon: const Icon(Icons.screenshot_monitor,
+                color: Colors.white, size: 20),
+            label: const Text('Screenshot',
+                style: TextStyle(color: Colors.white, fontSize: 13)),
+          ),
           TextButton.icon(
             onPressed: _pickFromGallery,
             icon: const Icon(Icons.photo_library_outlined,
@@ -262,7 +352,23 @@ class _CameraScreenState extends State<CameraScreen> {
                                   ),
                                 ),
 
-                                const SizedBox(width: 52),
+                                GestureDetector(
+                                  onTap: _pickScreenshot,
+                                  child: Container(
+                                    width: 52,
+                                    height: 52,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white24,
+                                      borderRadius:
+                                          BorderRadius.circular(12),
+                                    ),
+                                    child: const Icon(
+                                      Icons.screenshot_monitor,
+                                      color: Colors.white,
+                                      size: 26,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
