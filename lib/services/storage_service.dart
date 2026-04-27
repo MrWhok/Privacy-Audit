@@ -21,9 +21,7 @@ class StorageService {
   }
 
   static Future<void> deleteScreenshot(String url) async {
-    try {
-      final ref = _storage.refFromURL(url);
-      await ref.delete();
-    } catch (_) {}
+    final ref = _storage.refFromURL(url);
+    await ref.delete();
   }
 }

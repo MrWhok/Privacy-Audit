@@ -91,14 +91,21 @@ class _DetailScreenState extends State<DetailScreen> {
       ),
     );
     if (confirm == true) {
-      await NotificationService.showDeleteSuccess(_entry.name);
-      if (_entry.screenshotUrl != null) {
-        await StorageService.deleteScreenshot(_entry.screenshotUrl!);
+      try {
+        await NotificationService.showDeleteSuccess(_entry.name);
+        if (_entry.screenshotUrl != null) {
+          await StorageService.deleteScreenshot(_entry.screenshotUrl!);
+        }
+        await FirestoreService.deleteApp(_entry.id!);
+        await DatabaseService.deleteApp(_entry.id!);
+        if (!mounted) return;
+        Navigator.pop(context);
+      } catch (e) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Delete failed: $e')),
+        );
       }
-      await FirestoreService.deleteApp(_entry.id!);
-      await DatabaseService.deleteApp(_entry.id!);
-      if (!mounted) return;
-      Navigator.pop(context);
     }
   }
 

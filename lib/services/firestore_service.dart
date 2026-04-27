@@ -28,10 +28,7 @@ class FirestoreService {
   }
 
   static Future<void> deleteApp(int appId) async {
-    try {
-      await _appsRef.doc(appId.toString()).delete();
-    } catch (e) {
-    }
+    await _appsRef.doc(appId.toString()).delete();
   }
 
   static Future<List<Map<String, dynamic>>> getApps() async {

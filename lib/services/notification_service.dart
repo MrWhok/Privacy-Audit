@@ -73,7 +73,7 @@ class NotificationService {
       const details = NotificationDetails(android: androidDetails);
       await _plugin.show(
         3,
-        '✏️ Entry updated',
+        'Entry updated',
         '$appName has been updated in your audit.',
         details,
       );
@@ -116,7 +116,7 @@ class NotificationService {
           tz.TZDateTime.now(tz.local).add(const Duration(days: 30));
       await _plugin.zonedSchedule(
         1,
-        '🛡️ Time to re-audit',
+        'Time to re-audit',
         'Review your app permissions to stay safe.',
         scheduledDate,
         details,
