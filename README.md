@@ -1,6 +1,6 @@
 # Privacy Audit (App Permission Tracker)
 
-A Flutter application that helps users audit and track the permissions granted to apps installed on their Android device. Users can log which apps have access to sensitive resources (camera, microphone, location, etc.), assign risk levels, attach screenshot evidence, and get notified to re-audit periodically.
+A Flutter application that helps users audit and track the permissions granted to apps installed on their Android device. Users can log which apps have access to sensitive resources (camera, microphone, location, etc.), assign risk levels, attach screenshot evidence, and get notified after doing some action.
 
 ---
 ## Identity
