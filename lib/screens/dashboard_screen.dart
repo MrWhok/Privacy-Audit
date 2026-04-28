@@ -102,7 +102,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final filtered = _filtered;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My audit', style: TextStyle(fontWeight: FontWeight.w500)),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('My audit', style: TextStyle(fontWeight: FontWeight.w500)),
+            Text(
+              FirebaseAuth.instance.currentUser?.email ?? '',
+              style: const TextStyle(fontSize: 11, color: Colors.grey, fontWeight: FontWeight.normal),
+            ),
+          ],
+        ),
         actions: [
           IconButton(onPressed: _logout, icon: const Icon(Icons.logout)),
         ],
