@@ -7,7 +7,7 @@ A Flutter application that helps users audit and track the permissions granted t
 
 - Name  : Rafif Aydin Ahmad
 - NRP   : 5025231198
-- Link YT: (https://www.youtube.com/watch?v=CSQWM9BQw8s)[https://www.youtube.com/watch?v=CSQWM9BQw8s]
+- Link YT: https://www.youtube.com/watch?v=CSQWM9BQw8s
 
 ---
 ## Application Features
