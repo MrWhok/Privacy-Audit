@@ -36,6 +36,7 @@ class _CameraScreenState extends State<CameraScreen> {
     final controller = CameraController(
       _cameras[index],
       ResolutionPreset.high,
+      enableAudio: false,
     );
     _controller = controller;
     _initFuture = controller.initialize();
