@@ -27,69 +27,69 @@ A Flutter application that helps users audit and track the permissions granted t
 ### Authentication
 - Login
 
-    ![Login Screen](screenshots/login.jpg)
+    ![Login Screen](Screenshots/login.jpg)
 
 
 - Register
 
-    ![Register Screen](screenshots/register.jpg)
+    ![Register Screen](Screenshots/register.jpg)
 
 ### Dashboard
 
 - Home
 
-    ![Dashboard](screenshots/dashboard.jpg)
+    ![Dashboard](Screenshots/dashboard.jpg)
 
 - Filter
 
-    ![Filter](screenshots/dashboard_filter.jpg)
+    ![Filter](Screenshots/dashboard_filter.jpg)
 
 
 ### CRUD Operations
 
 - Add Entry
 
-    ![Add](screenshots/add_entry.jpg)
+    ![Add](Screenshots/add_entry.jpg)
 
 - View Detail
 
-    ![Detail](screenshots/detail.jpg)
+    ![Detail](Screenshots/detail.jpg)
 
 - Edit Entry
 
-    ![Edit](screenshots/edit_entry.jpg)
+    ![Edit](Screenshots/edit_entry.jpg)
 
 - Delete Confirm
 
-    ![Delete](screenshots/delete_confirm.jpg)
+    ![Delete](Screenshots/delete_confirm.jpg)
 
 ### Camera, Image Picker, Screenshot Guide Feature
 
 - Camera View
 
-    ![Camera](screenshots/camera.jpg)
+    ![Camera](Screenshots/camera.jpg)
 
 - Image Picker
 
-    ![Switch](screenshots/image_picker.jpg)
+    ![Switch](Screenshots/image_picker.jpg)
 
 - Screenshot Guide
 
-    ![Guide](screenshots/screenshot_guide.jpg)
+    ![Guide](Screenshots/screenshot_guide.jpg)
 
 - Evidence Attached
 
-    ![Evidence](screenshots/evidence.jpg)
+    ![Evidence](Screenshots/evidence.jpg)
 
 ### Notifications
 
 - Save Notification
 
-    ![Save Notif](screenshots/notif_save.jpg)
+    ![Save Notif](Screenshots/notif_save.jpg)
 
 - Critical Risk Alert
 
-    ![Critical Notif](screenshots/notif_critical.jpg)
+    ![Critical Notif](Screenshots/notif_critical.jpg)
 
 ### Firebase Console
 
@@ -99,7 +99,7 @@ A Flutter application that helps users audit and track the permissions granted t
 
 
 - Firebase Storage
-![Storage](Screenshots/storage_console.png)
+    ![Storage](Screenshots/storage_console.png)
 
 
 - Firebase Auth Users
