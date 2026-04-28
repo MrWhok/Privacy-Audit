@@ -121,7 +121,7 @@ class _DetailScreenState extends State<DetailScreen> {
     for (final p in _perms) {
       await DatabaseService.updatePermission(p);
     }
-    await FirestoreService.saveApp(updated);
+    await FirestoreService.saveApp(updated, _perms);
     await NotificationService.showUpdateSuccess(updated.name);
     setState(() { _entry = updated; _editing = false; });
     if (!mounted) return;

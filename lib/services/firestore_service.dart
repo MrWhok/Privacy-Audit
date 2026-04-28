@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models/app_entry.dart';
+import '../models/permission_item.dart';
 
 class FirestoreService {
   static final _db = FirebaseFirestore.instance;
@@ -11,7 +12,7 @@ class FirestoreService {
   static CollectionReference get _appsRef =>
       _db.collection('users').doc(_uid).collection('apps');
 
-  static Future<void> saveApp(AppEntry entry) async {
+  static Future<void> saveApp(AppEntry entry, List<PermissionItem> perms) async {
     try {
       await _appsRef.doc(entry.id.toString()).set({
         'id': entry.id,
@@ -22,6 +23,11 @@ class FirestoreService {
         'screenshot_url': entry.screenshotUrl,
         'last_audited': entry.lastAudited,
         'updated_at': FieldValue.serverTimestamp(),
+        'permissions': perms.map((p) => {
+          'perm_type': p.permType,
+          'granted': p.granted,
+          'reason': p.reason,
+        }).toList(),
       });
     } catch (e) {
     }

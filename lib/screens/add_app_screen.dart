@@ -102,7 +102,7 @@ class _AddAppScreenState extends State<AddAppScreen> {
     await DatabaseService.insertPermissions(permItems);
 
     final savedEntry = entry.copyWith(id: appId);
-    await FirestoreService.saveApp(savedEntry);
+    await FirestoreService.saveApp(savedEntry, permItems);
 
     await NotificationService.showSaveSuccess(_nameCtrl.text.trim(), _riskLevel);
     if (_riskLevel == 'Critical') {
