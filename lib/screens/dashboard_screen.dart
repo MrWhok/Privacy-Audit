@@ -3,6 +3,8 @@ import '../models/app_entry.dart';
 import '../models/permission_item.dart';
 import '../services/auth_service.dart';
 import '../services/database_service.dart';
+import '../services/firestore_service.dart';
+import '../services/storage_service.dart';
 import '../widgets/app_list_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'add_app_screen.dart';
@@ -82,8 +84,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
     );
     if (confirm == true) {
-      await DatabaseService.deleteApp(entry.id!);
-      _load();
+      try {
+        if (entry.screenshotUrl != null) {
+          await StorageService.deleteScreenshot(entry.screenshotUrl!);
+        }
+        await FirestoreService.deleteApp(entry.id!);
+        await DatabaseService.deleteApp(entry.id!);
+        _load();
+      } catch (e) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Delete failed: $e')),
+        );
+      }
     }
   }
 
