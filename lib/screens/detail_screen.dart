@@ -21,6 +21,7 @@ class _DetailScreenState extends State<DetailScreen> {
   bool _editing = false;
   late TextEditingController _nameCtrl;
   late TextEditingController _notesCtrl;
+  final Map<String, TextEditingController> _reasonCtrls = {};
   late String _riskLevel;
   late String _category;
   bool _loading = true;
@@ -41,6 +42,14 @@ class _DetailScreenState extends State<DetailScreen> {
     _loadPerms();
   }
 
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    _notesCtrl.dispose();
+    for (final c in _reasonCtrls.values) { c.dispose(); }
+    super.dispose();
+  }
+
   void _openFullScreen(String path) {
     Navigator.push(
       context,
@@ -52,6 +61,9 @@ class _DetailScreenState extends State<DetailScreen> {
 
   Future<void> _loadPerms() async {
     final perms = await DatabaseService.getPermissions(_entry.id!);
+    for (final p in perms) {
+      _reasonCtrls[p.permType] = TextEditingController(text: p.reason ?? '');
+    }
     setState(() { _perms = perms; _loading = false; });
   }
 
@@ -63,6 +75,10 @@ class _DetailScreenState extends State<DetailScreen> {
       notes: _notesCtrl.text.trim().isEmpty ? null : _notesCtrl.text.trim(),
       lastAudited: DateFormat('MMM d, yyyy').format(DateTime.now()),
     );
+    for (int i = 0; i < _perms.length; i++) {
+      final text = _reasonCtrls[_perms[i].permType]?.text.trim();
+      _perms[i] = _perms[i].copyWith(reason: (text == null || text.isEmpty) ? null : text);
+    }
     await DatabaseService.updateApp(updated);
     for (final p in _perms) {
       await DatabaseService.updatePermission(p);
@@ -301,7 +317,17 @@ class _DetailScreenState extends State<DetailScreen> {
                                           ),
                                       ],
                                     ),
-                                    if (p.reason != null && p.reason!.isNotEmpty)
+                                    if (_editing && p.granted) ...[
+                                      const SizedBox(height: 6),
+                                      TextField(
+                                        controller: _reasonCtrls[p.permType],
+                                        decoration: InputDecoration(
+                                          hintText: 'Why does this app need ${p.permType}?',
+                                          isDense: true,
+                                          border: const OutlineInputBorder(),
+                                        ),
+                                      ),
+                                    ] else if (!_editing && p.reason != null && p.reason!.isNotEmpty)
                                       Text(p.reason!,
                                         style: const TextStyle(fontSize: 12, color: Colors.grey)),
                                     if (i < _perms.length - 1)
