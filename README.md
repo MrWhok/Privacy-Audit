@@ -3,7 +3,13 @@
 A Flutter application that helps users audit and track the permissions granted to apps installed on their Android device. Users can log which apps have access to sensitive resources (camera, microphone, location, etc.), assign risk levels, attach screenshot evidence, and get notified to re-audit periodically.
 
 ---
+## Identity
 
+- Name  : Rafif Aydin Ahmad
+- NRP   : 5025231198
+- Link YT: (https://www.youtube.com/watch?v=CSQWM9BQw8s)[https://www.youtube.com/watch?v=CSQWM9BQw8s]
+
+---
 ## Application Features
 
 | # | Features | 
@@ -19,29 +25,71 @@ A Flutter application that helps users audit and track the permissions granted t
 ## Screenshots
 
 ### Authentication
-| Login | Register |
-|---|---|
-| ![Login Screen](screenshots/login.jpg) | ![Register Screen](screenshots/register.jpg) |
+- Login
+
+    ![Login Screen](screenshots/login.jpg)
+
+
+- Register
+
+    ![Register Screen](screenshots/register.jpg)
 
 ### Dashboard
-| Home | Filter by Permission |
-|---|---|
-| ![Dashboard](screenshots/dashboard.jpg) | ![Filter](screenshots/dashboard_filter.jpg) |
+
+- Home
+
+    ![Dashboard](screenshots/dashboard.jpg)
+
+- Filter
+
+    ![Filter](screenshots/dashboard_filter.jpg)
+
 
 ### CRUD Operations
-| Add Entry | View Detail | Edit Entry | Delete Confirm |
-|---|---|---|---|
-| ![Add](screenshots/add_entry.jpg) | ![Detail](screenshots/detail.jpg) | ![Edit](screenshots/edit_entry.jpg) | ![Delete](screenshots/delete_confirm.jpg) |
+
+- Add Entry
+
+    ![Add](screenshots/add_entry.jpg)
+
+- View Detail
+
+    ![Detail](screenshots/detail.jpg)
+
+- Edit Entry
+
+    ![Edit](screenshots/edit_entry.jpg)
+
+- Delete Confirm
+
+    ![Delete](screenshots/delete_confirm.jpg)
 
 ### Camera, Image Picker, Screenshot Guide Feature
-| Camera View | Image Picker | Screenshot Guide | Evidence Attached |
-|---|---|---|---|
-| ![Camera](screenshots/camera.jpg) | ![Switch](screenshots/image_picker.jpg) | ![Guide](screenshots/screenshot_guide.jpg) | ![Evidence](screenshots/evidence.jpg) |
+
+- Camera View
+
+    ![Camera](screenshots/camera.jpg)
+
+- Image Picker
+
+    ![Switch](screenshots/image_picker.jpg)
+
+- Screenshot Guide
+
+    ![Guide](screenshots/screenshot_guide.jpg)
+
+- Evidence Attached
+
+    ![Evidence](screenshots/evidence.jpg)
 
 ### Notifications
-| Save Notification | Critical Risk Alert | Monthly Reminder |
-|---|---|---|
-| ![Notif Save](screenshots/notif_save.jpg) | ![Notif Critical](screenshots/notif_critical.jpg) | -|
+
+- Save Notification
+
+    ![Save Notif](screenshots/notif_save.jpg)
+
+- Critical Risk Alert
+
+    ![Critical Notif](screenshots/notif_critical.jpg)
 
 ### Firebase Console
 
