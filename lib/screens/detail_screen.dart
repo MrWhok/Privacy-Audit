@@ -6,7 +6,9 @@ import '../services/database_service.dart';
 import '../services/notification_service.dart';
 import '../services/firestore_service.dart';
 import '../services/storage_service.dart';
+import 'dart:io';
 import '../widgets/risk_badge.dart';
+import 'camera_screen.dart';
 
 class DetailScreen extends StatefulWidget {
   final AppEntry entry;
@@ -22,6 +24,7 @@ class _DetailScreenState extends State<DetailScreen> {
   late TextEditingController _nameCtrl;
   late TextEditingController _notesCtrl;
   final Map<String, TextEditingController> _reasonCtrls = {};
+  File? _newImageFile;
   late String _riskLevel;
   late String _category;
   bool _loading = true;
@@ -50,6 +53,31 @@ class _DetailScreenState extends State<DetailScreen> {
     super.dispose();
   }
 
+  Widget _noImagePlaceholder() => Container(
+    height: 200,
+    width: double.infinity,
+    decoration: BoxDecoration(
+      color: Colors.grey.shade100,
+      borderRadius: BorderRadius.circular(8),
+    ),
+    child: const Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Icons.camera_alt_outlined, color: Colors.grey, size: 32),
+        SizedBox(height: 8),
+        Text('Tap to add photo', style: TextStyle(color: Colors.grey)),
+      ],
+    ),
+  );
+
+  Future<void> _openCamera() async {
+    final result = await Navigator.push<File>(
+      context,
+      MaterialPageRoute(builder: (_) => const CameraScreen()),
+    );
+    if (result != null) setState(() => _newImageFile = result);
+  }
+
   void _openFullScreen(String path) {
     Navigator.push(
       context,
@@ -68,7 +96,7 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   Future<void> _save() async {
-    final updated = _entry.copyWith(
+    var updated = _entry.copyWith(
       name: _nameCtrl.text.trim(),
       category: _category,
       riskLevel: _riskLevel,
@@ -79,6 +107,16 @@ class _DetailScreenState extends State<DetailScreen> {
       final text = _reasonCtrls[_perms[i].permType]?.text.trim();
       _perms[i] = _perms[i].copyWith(reason: (text == null || text.isEmpty) ? null : text);
     }
+
+    String? screenshotUrl = _entry.screenshotUrl;
+    if (_newImageFile != null) {
+      if (_entry.screenshotUrl != null) {
+        await StorageService.deleteScreenshot(_entry.screenshotUrl!);
+      }
+      screenshotUrl = await StorageService.uploadScreenshot(_newImageFile!, updated.name);
+    }
+    updated = updated.copyWith(screenshotUrl: screenshotUrl);
+
     await DatabaseService.updateApp(updated);
     for (final p in _perms) {
       await DatabaseService.updatePermission(p);
@@ -207,39 +245,34 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   const SizedBox(height: 16),
                   // Screenshot
-                  if (_entry.screenshotUrl != null) ...[
+                  if (_newImageFile != null || _entry.screenshotUrl != null || _editing) ...[
                     const Text('Evidence screenshot',
                       style: TextStyle(fontSize: 12, color: Colors.grey)),
                     const SizedBox(height: 6),
                     GestureDetector(
-                      onTap: () => _openFullScreen(_entry.screenshotUrl!),
+                      onTap: _editing ? _openCamera : () {
+                        if (_entry.screenshotUrl != null) _openFullScreen(_entry.screenshotUrl!);
+                      },
                       child: Stack(
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8),
-                            child: Image.network(
-                              _entry.screenshotUrl!,
-                              height: 200,
-                              width: double.infinity,
-                              fit: BoxFit.contain,
-                              errorBuilder: (ctx, err, _) => Container(
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: const Center(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(Icons.image_not_supported_outlined, color: Colors.grey),
-                                      SizedBox(height: 4),
-                                      Text('Image unavailable', style: TextStyle(color: Colors.grey, fontSize: 12)),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+                            child: _newImageFile != null
+                                ? Image.file(
+                                    _newImageFile!,
+                                    height: 200,
+                                    width: double.infinity,
+                                    fit: BoxFit.contain,
+                                  )
+                                : _entry.screenshotUrl != null
+                                    ? Image.network(
+                                        _entry.screenshotUrl!,
+                                        height: 200,
+                                        width: double.infinity,
+                                        fit: BoxFit.contain,
+                                        errorBuilder: (ctx, err, _) => _noImagePlaceholder(),
+                                      )
+                                    : _noImagePlaceholder(),
                           ),
                           Positioned(
                             bottom: 8,
@@ -250,12 +283,16 @@ class _DetailScreenState extends State<DetailScreen> {
                                 color: Colors.black54,
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: const Row(
+                              child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icon(Icons.fullscreen, color: Colors.white, size: 14),
-                                  SizedBox(width: 3),
-                                  Text('Tap to expand', style: TextStyle(color: Colors.white, fontSize: 11)),
+                                  Icon(
+                                    _editing ? Icons.camera_alt_outlined : Icons.fullscreen,
+                                    color: Colors.white, size: 14),
+                                  const SizedBox(width: 3),
+                                  Text(
+                                    _editing ? 'Tap to change photo' : 'Tap to expand',
+                                    style: const TextStyle(color: Colors.white, fontSize: 11)),
                                 ],
                               ),
                             ),
